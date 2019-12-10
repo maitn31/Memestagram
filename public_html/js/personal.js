@@ -86,7 +86,30 @@ const createImageCards = (images) => {
     mainPostsDiv.innerHTML = '';
     images.forEach(async (image) => {
 
-        const likes = image.likes;
+        const countLike = image.likes;
+        const countComment = image.comments;
+        let likes = '';
+        let comments = '';
+        switch (countLike) {
+            case 0:
+                likes = '';
+                break;
+            case 1:
+                likes = countLike + ' like';
+                break;
+            default:
+                likes = countLike + ' likes';
+        }
+        switch (countComment) {
+            case 0:
+                comments = '';
+                break;
+            case 1:
+                comments = countComment + ' comment';
+                break;
+            default:
+                comments = countComment + ' comments';
+        }
         //Create star-the most favorite, and private icon
         const star = document.createElement('i');
         star.classList.add('fa');
@@ -122,7 +145,7 @@ const createImageCards = (images) => {
             likeButtonListener(e, image.post_id);
         });
         const likeUI = document.createElement('div');
-        likeUI.innerHTML = `${likes} likes`;
+        likeUI.innerHTML = `${likes} ${comments}`;
         infoLike.appendChild(likeButton);
         infoLike.appendChild(likeUI);
 

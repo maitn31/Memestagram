@@ -63,13 +63,35 @@ const createImageCards = (images) => {
     mainPostsDiv.innerHTML = '';
     images.forEach(async (image) => {
 
-        const likes = image.likes;
-        const comments = image.comments;
+        const countLike = image.likes;
+        const countComment = image.comments;
+        let likes = '';
+        let comments = '';
+        switch (countLike) {
+            case 0:
+                likes = '';
+                break;
+            case 1:
+                likes = countLike + ' like';
+                break;
+            default:
+                likes = countLike + ' likes';
+        }
+        switch (countComment) {
+            case 0:
+                comments = '';
+                break;
+            case 1:
+                comments = countComment + ' comment';
+                break;
+            default:
+                comments = countComment + ' comments';
+        }
         //Create star-the most favorite, and private icon
         const star = document.createElement('i');
         star.classList.add('fa');
         star.classList.add('fa-star');
-        const pv= document.createElement('i');
+        const pv = document.createElement('i');
         pv.classList.add('fa');
         pv.classList.add('fa-eye-slash');
 
@@ -102,7 +124,7 @@ const createImageCards = (images) => {
             });
 
             const likeUI = document.createElement('div');
-            likeUI.innerHTML = `${likes} likes ${comments} comments`;
+            likeUI.innerHTML = `${likes}  ${comments}`;
             infoLike.appendChild(likeButton);
             infoLike.appendChild(likeUI);
 
@@ -133,12 +155,12 @@ const createImageCards = (images) => {
 
             const ownerPost = document.createElement('h2');
             ownerPost.innerHTML = `${image.ownername}`;
-            if (likes == sessionStorage.getItem('mostFavorite')) {
+            if (countLike == sessionStorage.getItem('mostFavorite')) {
                 ownerPost.appendChild(star);
-            }else if(likes >sessionStorage.getItem('mostFavorite')){
-                sessionStorage.setItem('mostFavorite', likes);
+            } else if (countLike > sessionStorage.getItem('mostFavorite')) {
+                sessionStorage.setItem('mostFavorite', countLike);
             }
-            if(image.privacy==='yes'){
+            if (image.privacy === 'yes') {
                 ownerPost.appendChild(pv);
             }
             const div = document.createElement('div');
@@ -152,7 +174,7 @@ const createImageCards = (images) => {
             }
             // open large image when clicking image
             img.addEventListener('click', () => {
-                createModal(image.post_id,image.likes, image.isLiked,image.privacy);
+                createModal(image.post_id, image.likes, image.isLiked, image.privacy);
             });
             mainPostsDiv.appendChild(div);
         }
@@ -221,9 +243,9 @@ loginForm.addEventListener('submit', async (evt) => {
         // save token
         sessionStorage.setItem('token', json[0].user_id);
         console.log('savetoken completed');
-        const inputs= loginForm.querySelectorAll('input');
-        inputs.forEach(el=>{
-            el.value="";
+        const inputs = loginForm.querySelectorAll('input');
+        inputs.forEach(el => {
+            el.value = "";
         });
         if (json[0].mainAdmin === "yes") {
             sessionStorage.setItem('mainAdmin', json[0].user_id);
@@ -276,9 +298,9 @@ addUserForm.addEventListener('submit', async (evt) => {
     // save token
     sessionStorage.setItem('token', json[0].user_id);
     //Clear text in after register
-    const inputs= addUserForm.querySelectorAll('input');
-    inputs.forEach(el=>{
-        el.value="";
+    const inputs = addUserForm.querySelectorAll('input');
+    inputs.forEach(el => {
+        el.value = "";
     });
     // show/hide forms + images
     loginWrapper.classList.toggle('hide');
