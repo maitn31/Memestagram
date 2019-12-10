@@ -64,6 +64,7 @@ const createImageCards = (images) => {
     images.forEach(async (image) => {
 
         const likes = image.likes;
+        const comments = image.comments;
         //Create star-the most favorite, and private icon
         const star = document.createElement('i');
         star.classList.add('fa');
@@ -101,7 +102,7 @@ const createImageCards = (images) => {
             });
 
             const likeUI = document.createElement('div');
-            likeUI.innerHTML = `${likes} likes`;
+            likeUI.innerHTML = `${likes} likes ${comments} comments`;
             infoLike.appendChild(likeButton);
             infoLike.appendChild(likeUI);
 
