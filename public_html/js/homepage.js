@@ -222,7 +222,7 @@ const getMostLikes = async () => {
 loginForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
     const data = serializeJson(loginForm);
-    console.log(data);
+    //console.log(data);
     const fetchOptions = {
         method: 'POST',
         headers: {
