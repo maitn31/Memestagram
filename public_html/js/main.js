@@ -181,7 +181,7 @@ const postComment = () => {
 //check Video or Image before creating modal image
 const checkType = (filename) => {
     if (filename.includes('mp4')) {
-        return `<video width="400" height="400"a controls> <source src="${url}/uploads/${filename}" type="video/mp4"></video>`;
+        return `<video width="400" height="400"a controls autoplay> <source src="${url}/uploads/${filename}" type="video/mp4"></video>`;
     } else {
         return `<img alt="" src="${url}/uploads/${filename}">`;
     }
