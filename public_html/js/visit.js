@@ -169,10 +169,10 @@ const check = async () => {
         if (searchResult.length === 0) {
             alert('User has NOT posted anything! ^-^');
         } else {
-            if (sessionStorage.getItem('token') && searchResult[0].ownerid == sessionStorage.getItem('token')) {
-                console.log('trung ID');
-                window.location.replace('/personal');
-            }
+            // if (sessionStorage.getItem('token') && searchResult[0].ownerid == sessionStorage.getItem('token')) {
+            //     console.log('trung ID');
+            //     window.location.replace('/personal');
+            // }
         }
     }
 

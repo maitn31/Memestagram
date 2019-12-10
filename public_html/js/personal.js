@@ -179,7 +179,6 @@ closeModaladdForm.addEventListener('click', (evt) => {
     clearValuePostImageModal();
 });
 
-
 // AJAX call
 
 const getImage = async () => {
@@ -214,10 +213,10 @@ addForm.addEventListener('submit', async (evt) => {
     const response = await fetch(url + '/image/test', fetchOptions);
     const json = await response.json();
     document.querySelector('#post-modal').classList.toggle('hide');
-    const inputs= addForm.querySelectorAll('input');
-    inputs.forEach(el=>{
-        el.value="";
-    });
+    // const inputs= addForm.querySelectorAll('input');
+    // // inputs.forEach(el=>{
+    // //     el.value="";
+    // // });
     clearValuePostImageModal();
     window.location.reload();
 });
