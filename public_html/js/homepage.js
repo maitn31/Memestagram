@@ -177,7 +177,7 @@ const createImageCards = (images) => {
             }
             // open large image when clicking image
             img.addEventListener('click', () => {
-                createModal(image.post_id, image.likes, image.isLiked, image.privacy);
+                createModal(image.post_id,image.likes, image.isLiked,image.privacy, image.time, image.comments);
             });
             mainPostsDiv.appendChild(div);
         }

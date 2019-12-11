@@ -86,6 +86,8 @@ const createImageCards = (images) => {
     mainPostsDiv.innerHTML = '';
     images.forEach(async (image) => {
 
+        const countLike = image.likes;
+        const countComment = image.comments;
         const time = new Date(image.time).toLocaleTimeString();
         const date = new Date(image.time).toLocaleDateString();
         let likes,comments;
@@ -109,7 +111,7 @@ const createImageCards = (images) => {
             default:
                 comments = countComment + ' comments';
         }
-        //Create star-the most favorite, and private icon
+        // //Create star-the most favorite, and private icon
         const star = document.createElement('i');
         star.classList.add('fa');
         star.classList.add('fa-star');
@@ -180,7 +182,7 @@ const createImageCards = (images) => {
 
         // open large image when clicking image
         img.addEventListener('click', () => {
-            createModal(image.post_id,image.likes, image.isLiked,image.privacy);
+            createModal(image.post_id,image.likes, image.isLiked,image.privacy, image.time, image.comments);
         });
         mainPostsDiv.appendChild(div);
     });

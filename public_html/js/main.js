@@ -1,8 +1,28 @@
 
 //Create Modal Image
-const createModalCard = (el, comment, like, mostLike, isLiked, isPrivate) => {
+const createModalCard = (el, comment, countLike, mostLike, isLiked, isPrivate, date, time, countComment) => {
     const textVideo = checkType(el[0].filename);
-
+    let likes,comments;
+    switch (countLike) {
+        case 0:
+            likes = '';
+            break;
+        case 1:
+            likes = countLike + ' like';
+            break;
+        default:
+            likes = countLike + ' likes';
+    }
+    switch (countComment) {
+        case 0:
+            comments = '';
+            break;
+        case 1:
+            comments = countComment + ' comment';
+            break;
+        default:
+            comments = countComment + ' comments';
+    }
     const markup = `
         <div class="image-container">
             ${textVideo}
@@ -17,6 +37,7 @@ const createModalCard = (el, comment, like, mostLike, isLiked, isPrivate) => {
                 <div class="description">
                     <h3>${el[0].ownername}</h3>
                     <span>${el[0].description}</span>
+                    <div>${date} ${time} </div>
                 </div>
                 <div id="comment-section">${comment}</div>
             </div>
@@ -24,7 +45,7 @@ const createModalCard = (el, comment, like, mostLike, isLiked, isPrivate) => {
                 <button class="${isLiked ? 'liked' : ''}">
                     <i class="fa fa-heart" ></i>
                 </button>
-                <div>${like} likes</div>
+                <div>${likes} ${comments}</div>
             </div>
             <div class="new-comment">
                 <form class="comment-form" id="add-comment-form">
@@ -40,7 +61,10 @@ const createModalCard = (el, comment, like, mostLike, isLiked, isPrivate) => {
     return markup;
 };
 
-const createModal = async (postId, likes, isLiked, isPrivate) => {
+const createModal = async (postId, likes, isLiked, isPrivate, jTime, comment) => {
+
+    const date= new Date(jTime).toLocaleDateString();
+    const time= new Date(jTime).toLocaleTimeString();
 
     selectedPost = postId;
     //comparision
@@ -55,13 +79,14 @@ const createModal = async (postId, likes, isLiked, isPrivate) => {
                     <h3>${comment.ownername}</h3>
                     <span>${comment.content}</span>
                 </div>
+                <div>${date} ${time} </div>
             `;
         listComment += markup;
     });
 
     const response = await fetch(url + `/image/test/${postId}`);
     const json = await response.json();
-    modalCard.innerHTML = createModalCard(json, listComment, likes, mostFavorite, isLiked, isPrivate);
+    modalCard.innerHTML = createModalCard(json, listComment, likes, mostFavorite, isLiked, isPrivate, date, time, comment);
 
     const modalLikeButton = document.querySelector('.info .info-like button');
 

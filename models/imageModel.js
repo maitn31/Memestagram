@@ -29,7 +29,7 @@ const getImage = async (params) => {
 const getImageByUser = async (params) => {
     try {
         const [rows] = await promisePool.execute(
-            'SELECT p.*, u.name as ownername, count(DISTINCT l.ownerid) as likes, IF(EXISTS(SELECT * FROM like_of_post WHERE like_of_post.ownerid=? AND like_of_post.id = p.post_id),1,0) as isLiked, count(DISTINCT c.id) as comments FROM post p LEFT OUTER JOIN like_of_post l ON l.id= p.post_id JOIN user_info u ON p.ownerid=u.user_id LEFT OUTER JOIN comment c ON c.postid=p.post_id WHERE u.user_id=? GROUP BY p.post_id ORDER BY p.post_id DESC;',
+            'SELECT p.*, u.name as ownername, count(DISTINCT l.ownerid) as likes, IF(EXISTS(SELECT * FROM like_of_post WHERE like_of_post.ownerid=2 AND like_of_post.id = p.post_id),1,0) as isLiked, count(DISTINCT c.id) as comments FROM post p LEFT OUTER JOIN like_of_post l ON l.id= p.post_id JOIN user_info u ON p.ownerid=u.user_id LEFT OUTER JOIN comment c ON c.postid=p.post_id WHERE u.user_id=2 GROUP BY p.post_id ORDER BY p.post_id DESC;',
             params
         );
         return rows;
