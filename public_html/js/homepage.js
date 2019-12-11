@@ -65,8 +65,10 @@ const createImageCards = (images) => {
 
         const countLike = image.likes;
         const countComment = image.comments;
-        let likes = '';
-        let comments = '';
+        const time = new Date(image.time).toLocaleTimeString();
+        const date = new Date(image.time).toLocaleDateString();
+        let likes,comments;
+
         switch (countLike) {
             case 0:
                 likes = '';
@@ -124,7 +126,8 @@ const createImageCards = (images) => {
             });
 
             const likeUI = document.createElement('div');
-            likeUI.innerHTML = `${likes}  ${comments}`;
+
+            likeUI.innerHTML = `${date} ${time} ${likes} ${comments}`;
             infoLike.appendChild(likeButton);
             infoLike.appendChild(likeUI);
 
@@ -232,30 +235,38 @@ loginForm.addEventListener('submit', async (evt) => {
     };
 
 
-    const response = await fetch(url + '/auth/login', fetchOptions);
-    const json = await response.json();
+    try {
+        const response = await fetch(url + '/auth/login', fetchOptions);
 
-    console.log('login response', json);
-    if (!json[0].email) {
-        alert(json.message);
-    } else {
-        console.log('savetoken pending..');
-        // save token
-        sessionStorage.setItem('token', json[0].user_id);
-        console.log('savetoken completed');
-        const inputs = loginForm.querySelectorAll('input');
-        inputs.forEach(el => {
-            el.value = "";
-        });
-        if (json[0].mainAdmin === "yes") {
-            sessionStorage.setItem('mainAdmin', json[0].user_id);
+        const json = await response.json();
+
+        console.log('login response', json);
+        if (!json[0].email) {
+            alert("Wrong email or password");
+            alert(json.message);
+        } else {
+            console.log('savetoken pending..');
+            // save token
+            sessionStorage.setItem('token', json[0].user_id);
+            console.log('savetoken completed');
+            const inputs = loginForm.querySelectorAll('input');
+            inputs.forEach(el => {
+                el.value = "";
+            });
+            if (json[0].mainAdmin === "yes") {
+                sessionStorage.setItem('mainAdmin', json[0].user_id);
+            }
+            console.log(sessionStorage);
+            loginWrapper.classList.toggle('hide');
+            main.classList.toggle('hide');
+            alert(`Login successfully! Hello ${json[0].name}`);
+            getImage();
         }
-        console.log(sessionStorage);
-        loginWrapper.classList.toggle('hide');
-        main.classList.toggle('hide');
-        alert(`Login successfully! Hello ${json[0].name}`);
-        getImage();
     }
+    catch (e) {
+        alert('Wrong email or password');
+    }
+
 });
 
 // logout

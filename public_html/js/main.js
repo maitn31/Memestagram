@@ -175,6 +175,7 @@ const postComment = () => {
             commentSection.innerHTML = listComment;
             const commentInput = document.querySelector('#add-comment-form input:nth-child(3)');
             commentInput.value = '';
+            getImage();
         });
     }
 };

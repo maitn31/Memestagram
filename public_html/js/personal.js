@@ -86,10 +86,9 @@ const createImageCards = (images) => {
     mainPostsDiv.innerHTML = '';
     images.forEach(async (image) => {
 
-        const countLike = image.likes;
-        const countComment = image.comments;
-        let likes = '';
-        let comments = '';
+        const time = new Date(image.time).toLocaleTimeString();
+        const date = new Date(image.time).toLocaleDateString();
+        let likes,comments;
         switch (countLike) {
             case 0:
                 likes = '';
@@ -145,7 +144,7 @@ const createImageCards = (images) => {
             likeButtonListener(e, image.post_id);
         });
         const likeUI = document.createElement('div');
-        likeUI.innerHTML = `${likes} ${comments}`;
+        likeUI.innerHTML = `${date} ${time} ${likes} ${comments}`;
         infoLike.appendChild(likeButton);
         infoLike.appendChild(likeUI);
 

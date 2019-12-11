@@ -30,6 +30,7 @@ router.use(passport.session());
 
 router.post('/login', 
     passport.authenticate('local', { failureRedirect: '/login' }),
+    //console.log(passport.authenticate);
     authController.login
 );
 
