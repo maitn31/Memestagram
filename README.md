@@ -1,1 +1,2 @@
-# projectBSWC
+# Final project: Media sharing.
+
